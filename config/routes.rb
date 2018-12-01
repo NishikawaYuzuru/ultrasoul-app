@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'ultrasoul#hello'
+  root 'ultrasoul#top'
 
-  get '/ready' => 'ultrasoul#ready'
+  get '/ready' => 'ultrasoul#ready', as: 'ready'
+
+  get '/about' => 'ultrasoul#about', as: 'about'
+
+  get '/ultrasoul' => 'ultrasoul#ultrasoul', as: 'ultrasoul'
+
+  get '/result' => 'ultrasoul#result', as: 'result'
+
 end

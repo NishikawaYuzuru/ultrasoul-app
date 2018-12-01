@@ -1,18 +1,21 @@
 class UltrasoulController < ApplicationController
-	def hello
-		render plain: 'Hello World!'
+	def top
 	end
 
-	def top
+	def about
 	end
 
 	def ready
 	end
 
-	attr_accessor :start_time, :end_time
+	def ultrasoul
+		puts @start_time = Time.now
+	end
 
-	def get_time
-		return Time.now
+	def result
+		puts ultrasoul
+		@time = total_time(ultrasoul, Time.now)
+		@message = ultra(@time)
 	end
 
 	def ultra(soul)
@@ -30,9 +33,9 @@ class UltrasoulController < ApplicationController
 	end
 
 
-	def total_time
-		start_time_second = self.start_time.min * 60 + self.start_time.sec
-		end_time_second = self.end_time.min * 60 + self.end_time.sec
+	def total_time(start_time, end_time)
+		start_time_second = start_time.min * 60 + start_time.sec
+		end_time_second = end_time.min * 60 + end_time.sec
 		time_second = end_time_second - start_time_second
 		ultra_soul_time = 68 - time_second
 		return ultra_soul_time
