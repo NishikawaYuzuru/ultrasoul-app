@@ -40,16 +40,39 @@ $(function(){
 		let resultTime = totalTime / 1000;
 		alert(resultTime);
 
-		$.ajax({
-			url: "ultrasoul/result",
-			type: "GET",
-			dataType: "html",
-			success: function(data) {
-                alert("success");
-            },
-            error: function(data) {
-                alert("errror");
-            }
-		});
+		$.get('/result');
+
+		// $.ajax({
+		// 	url: "/result",
+		// 	type: "GET",
+		// 	dataType: "html",
+		// 	// data: {"key": "aaaa"},
+		// 	success: function(data) {
+  //               alert("success");
+  //           },
+  //           error: function(data) {
+  //               alert("errror");
+  //           }
+		// });
 	});
+
+	$(document).on('click', '#ajax', function(){
+		$.ajax({
+			url: '/ultrasoul',
+			type: 'GET',
+			dataType: 'json'
+		})
+		.done(function(data) {
+			$('#result').text('aaaaaaaaa');
+		})
+		.fail(function(data) {
+			alert('失敗です');
+		})
+	});
+
+
+	$(document).on('click', '#get', function(){
+		$.get('/result');
+	});
+
 });
