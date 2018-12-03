@@ -13,9 +13,6 @@ class UltrasoulController < ApplicationController
 	end
 
 	def result
-		puts ultrasoul
-		@time = total_time(ultrasoul, Time.now)
-		@message = ultra(@time)
 	end
 
 	def ultra(soul)
