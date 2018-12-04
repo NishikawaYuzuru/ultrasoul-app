@@ -23,56 +23,96 @@ $(function(){
 
 	$(document).on('click', '#start', function(){
 		startTime = Date.now();
-		alert(startTime);
+		$('#sentence').find('h3').text('〜♪ 脳内再生');
+		$('#kitajima').attr('src', '/assets/oyogi.jpg');
 		$(this).attr({
 			'value': 'ハイ！',
 			'id': 'end'
-			// 'data-remote': "true",
-			// 'href': '/result',
-			// 'method': 'get'
 		});
 	});
 
 	$(document).on('click', '#end', function(){
 		endTime = Date.now();
-		alert(endTime);
 		totalTime = endTime - startTime;
 		let resultTime = totalTime / 1000;
-		alert(resultTime);
+		resultTime = 68 - resultTime
+		resulttime = 11
 
-		$.get('/result');
-
-		// $.ajax({
-		// 	url: "/result",
-		// 	type: "GET",
-		// 	dataType: "html",
-		// 	// data: {"key": "aaaa"},
-		// 	success: function(data) {
-  //               alert("success");
-  //           },
-  //           error: function(data) {
-  //               alert("errror");
-  //           }
-		// });
-	});
-
-	$(document).on('click', '#ajax', function(){
 		$.ajax({
-			url: '/ultrasoul',
+			url: '/result',
 			type: 'GET',
 			dataType: 'json'
 		})
 		.done(function(data) {
-			$('#result').text('aaaaaaaaa');
+			$('#kitajima').attr('src', kitajimaKosuke(resultTime));
+			$('#sentence').find('h3').text(ultraSoul(resultTime));
+			$('#ready').hide();
+			$('#again').show();
 		})
 		.fail(function(data) {
-			alert('失敗です');
+			alert('エラーです。もう一度「スタート」を押してください。');
+			$('#end').attr({
+				'value': 'スタート',
+				'id': 'start'
+			});
 		})
 	});
 
+	function ultraSoul (time) {
+		let messages = {
+			'perfect': 'ウルトラソウルパーフェクト',
+			'great': 'ウルトラソウルグッド',
+			'good': '平凡ソウル',
+			'bad': 'やり直し'
+		};
 
-	$(document).on('click', '#get', function(){
-		$.get('/result');
-	});
+		if (time <= 2 && time >= 0) {
+			return messages['perfect'];
+		} else if (time <= 5 && time >= 0) {
+			return messages['great'];
+		} else if (time <= 10 && time >= 0) {
+			return messages['good'];
+		} else {
+			return messages['bad'];
+		}
+	}
+
+	function kitajimaKosuke (time) {
+		let src = {
+			'perfect': '/assets/perfect.jpg',
+			'great': '/assets/great.jpg',
+			'good': '/assets/good.jpg',
+			'bad': '/assets/bad.jpg'
+		};
+
+		if (time <= 2 && time >= 0) {
+			return src['perfect'];
+		} else if (time <= 5 && time >= 0) {
+			return src['great'];
+		} else if (time <= 10 && time >= 0) {
+			return src['good'];
+		} else {
+			return src['bad'];
+		}
+	}
+
+	// $(document).on('click', '#ajax', function(){
+	// 	$.ajax({
+	// 		url: '/ultrasoul',
+	// 		type: 'GET',
+	// 		dataType: 'json'
+	// 	})
+	// 	.done(function(data) {
+	// 		$('#result').text('aaaaaaaaa');
+	// 	})
+	// 	.fail(function(data) {
+	// 		alert('失敗です');
+	// 	})
+	// });
+
+
+	// $(document).on('click', '#get', function(){
+	// 	$.get('/result');
+	// });
 
 });

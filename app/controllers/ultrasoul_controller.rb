@@ -13,6 +13,7 @@ class UltrasoulController < ApplicationController
 	end
 
 	def result
+		@result_time = params[:result_time]
 	end
 
 	def ultra(soul)
