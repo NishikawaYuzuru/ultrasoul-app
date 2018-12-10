@@ -22,8 +22,6 @@ $(function(){
 	let endTime = 0;
 	let totalTime = 0;
 
-	$('.end-message').hide();
-
 	$(document).on('click', '#start', function(){
 		startTime = Date.now();
 		$('#introduction').text('スタート！！！');
@@ -39,7 +37,7 @@ $(function(){
 		endTime = Date.now();
 		totalTime = endTime - startTime;
 		let resultTime = totalTime / 1000;
-		resultTime = 68 - resultTime
+		resultTime = 68 - resultTime;
 
 		$.ajax({
 			url: '/result',
@@ -54,6 +52,10 @@ $(function(){
 			$('.result-message').text('「 ' + ultraSoul(resultTime) + ' 」');
 			$('#ready').hide();
 			$('#again').show();
+
+			if (resultTime <= 2 && resultTime >= 0) {
+				$('.retry').hide();
+			}
 		})
 		.fail(function(data) {
 			alert('エラーです。もう一度「スタート」を押してください。');
@@ -62,6 +64,10 @@ $(function(){
 				'id': 'start'
 			});
 		})
+	});
+
+	$(document).on('click', '.retry', function(){
+		$('.end-message').hide();
 	});
 
 	function ultraSoul (time) {

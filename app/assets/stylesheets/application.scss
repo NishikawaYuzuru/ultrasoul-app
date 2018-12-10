@@ -16,6 +16,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
 	padding: 0 5%;
 }
@@ -68,14 +74,26 @@ body {
 	padding-bottom: 15px;
 }
 
+.end-message {
+	display: none;
+}
+
 .end-message > p {
 	font-size: 25px;
 	text-align: center;
 	padding-bottom: 15px;
 }
 
+.result-message {
+	font-weight: bold;
+}
+
 #again {
 	list-style: none;
+}
+
+.retry {
+	padding: 8px 0;
 }
 
 @media screen and (max-width: 500px) {
