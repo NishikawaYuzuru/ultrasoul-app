@@ -24,8 +24,8 @@ $(function(){
 
 	$(document).on('click', '#start', function(){
 		startTime = Date.now();
-		$('#introduction').text('スタート！！！');
 		$('#kitajima').attr('src', '/assets/oyogi.jpg');
+		$('#introduction').text('スタート！！！');
 		$('.start-message').find('p').text('ハイ！！！のタイミングでタッチ！！')
 		$(this).attr({
 			'value': 'ハイ！',
@@ -45,8 +45,8 @@ $(function(){
 			dataType: 'json'
 		})
 		.done(function(data) {
-			$('#introduction').hide();
 			$('#kitajima').attr('src', kitajimaKosuke(resultTime));
+			$('#introduction').hide();
 			$('.start-message').hide();
 			$('.end-message').show();
 			$('.result-message').text('「 ' + ultraSoul(resultTime) + ' 」');
