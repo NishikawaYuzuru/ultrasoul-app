@@ -14,6 +14,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
 
 $(function(){
@@ -36,7 +37,6 @@ $(function(){
 		totalTime = endTime - startTime;
 		let resultTime = totalTime / 1000;
 		resultTime = 68 - resultTime
-		resulttime = 11
 
 		$.ajax({
 			url: '/result',
