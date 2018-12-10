@@ -43,12 +43,39 @@ body {
 }
 
 .btn {
-	width: 135px;
+	width: 200px;
 	display: block;
 	border-radius: 15px;
 	font-size: 20px;
 	padding: 10px 30px;
 	margin: 0 auto;
+}
+
+#introduction {
+	font-size: 25px;
+	text-align: center;
+}
+
+#kitajima {
+	display: block;
+	margin: 0 auto;
+	padding: 30px 0;
+}
+
+.start-message > p {
+	font-size: 25px;
+	text-align: center;
+	padding-bottom: 15px;
+}
+
+.end-message > p {
+	font-size: 25px;
+	text-align: center;
+	padding-bottom: 15px;
+}
+
+#again {
+	list-style: none;
 }
 
 @media screen and (max-width: 500px) {

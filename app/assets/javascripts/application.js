@@ -22,10 +22,13 @@ $(function(){
 	let endTime = 0;
 	let totalTime = 0;
 
+	$('.end-message').hide();
+
 	$(document).on('click', '#start', function(){
 		startTime = Date.now();
-		$('#sentence').find('h3').text('〜♪ 脳内再生');
+		$('#introduction').text('スタート！！！');
 		$('#kitajima').attr('src', '/assets/oyogi.jpg');
+		$('.start-message').find('p').text('ハイ！！！のタイミングでタッチ！！')
 		$(this).attr({
 			'value': 'ハイ！',
 			'id': 'end'
@@ -44,8 +47,11 @@ $(function(){
 			dataType: 'json'
 		})
 		.done(function(data) {
+			$('#introduction').hide();
 			$('#kitajima').attr('src', kitajimaKosuke(resultTime));
-			$('#sentence').find('h3').text(ultraSoul(resultTime));
+			$('.start-message').hide();
+			$('.end-message').show();
+			$('.result-message').text('「 ' + ultraSoul(resultTime) + ' 」');
 			$('#ready').hide();
 			$('#again').show();
 		})
@@ -63,7 +69,7 @@ $(function(){
 			'perfect': 'ウルトラソウルパーフェクト',
 			'great': 'ウルトラソウルグッド',
 			'good': '平凡ソウル',
-			'bad': 'やり直し'
+			'bad': '無'
 		};
 
 		if (time <= 2 && time >= 0) {

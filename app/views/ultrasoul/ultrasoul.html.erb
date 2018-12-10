@@ -1,11 +1,22 @@
-<div id="sentence">
-	<p >準備が整ったら「スタート！」</p>
-</div>
-<img id="kitajima" src="/assets/ready.jpg">
-<div id="ready">
-	<input type="button" value="スタート" id="start"></input>
-</div>
-<div id="again">
-	<%= link_to 'やり直す', ultrasoul_path %>
-	<%= link_to 'トップに戻る', top_path  %>
+<div class="box">
+	<p id="introduction">
+		音声は流れません。脳内でウルトラソウルを再生してください。
+	</p>
+	<img id="kitajima" src="/assets/ready.jpg">
+	<div class="message-group">
+		<div class="start-message">
+			<p>準備が整ったら</p>
+		</div>
+		<div class="end-message">
+			<p>あなたの<br>ウルトラソウル力は</p>
+			<p class="result-message"></p>
+		</div>
+	</div>
+	<div id="ready">
+		<input type="button" value="スタート" id="start" class="btn btn-default"></input>
+	</div>
+	<ul id="again">
+		<li><%= link_to 'やり直したい', ultrasoul_path, class: "btn btn-default" %></li>
+		<li><%= link_to 'トップに戻る', top_path, class: "btn btn-default" %></li>
+	</ul>
 </div>
