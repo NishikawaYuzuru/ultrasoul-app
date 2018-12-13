@@ -18,13 +18,49 @@
 //= require_tree .
 
 $(function(){
+	/**
+	 * スタートボタンを押したタイミングの時刻のための変数です
+	 * @type {Number}
+	 */
 	let startTime = 0;
+
+	/**
+	 * 「ハイ！」を押したタイミングの時刻のための変数です
+	 * @type {Number}
+	 */
 	let endTime = 0;
+
+	/**
+	 * 「ハイ！」を押したタイミングの時刻のための変数です
+	 * @type {Number}
+	 */
 	let totalTime = 0;
+
+	/**
+	 * 結果画面でのメッセージを変更するための連想配列です
+	 * @type {Object}
+	 */
+	let messages = {
+		'perfect': 'ウルトラソウルパーフェクト',
+		'great': 'ウルトラソウルグッド',
+		'good': '平凡ソウル',
+		'bad': '無'
+	};
+
+	/**
+	 * 結果画面での画像を変更するための連想配列です
+	 * @type {Object}
+	 */
+	let src = {
+		'perfect': '/assets/perfect.png',
+		'great': '/assets/great.png',
+		'good': '/assets/good.png',
+		'bad': '/assets/bad.png'
+	};
 
 	$(document).on('click', '#start', function(){
 		startTime = Date.now();
-		$('#kitajima').attr('src', '/assets/oyogi.jpg');
+		$('#illust').attr('src', '/assets/start.png');
 		$('#introduction').text('スタート！！！');
 		$('.start-message').find('p').text('ハイ！！！のタイミングでタッチ！！')
 		$(this).attr({
@@ -45,13 +81,10 @@ $(function(){
 			dataType: 'json'
 		})
 		.done(function(data) {
-			$('#kitajima').attr('src', kitajimaKosuke(resultTime));
-			$('#introduction').hide();
-			$('.start-message').hide();
-			$('.end-message').show();
+			$('#illust').attr('src', illustChange(resultTime));
+			$('#introduction, .start-message, #ready').hide();
+			$('.end-message, #again').show();
 			$('.result-message').text('「 ' + ultraSoul(resultTime) + ' 」');
-			$('#ready').hide();
-			$('#again').show();
 
 			if (resultTime <= 2 && resultTime >= 0) {
 				$('.retry').hide();
@@ -70,14 +103,12 @@ $(function(){
 		$('.end-message').hide();
 	});
 
+	/**
+	 * 秒数によって結果画面で表示するメッセージを戻り値として返すための関数です
+	 * @param {Number} time 秒数を受け取ります
+	 * @return {Object}     結果メッセージを返します
+	 */
 	function ultraSoul (time) {
-		let messages = {
-			'perfect': 'ウルトラソウルパーフェクト',
-			'great': 'ウルトラソウルグッド',
-			'good': '平凡ソウル',
-			'bad': '無'
-		};
-
 		if (time <= 2 && time >= 0) {
 			return messages['perfect'];
 		} else if (time <= 5 && time >= 0) {
@@ -89,14 +120,12 @@ $(function(){
 		}
 	}
 
-	function kitajimaKosuke (time) {
-		let src = {
-			'perfect': '/assets/perfect.jpg',
-			'great': '/assets/great.jpg',
-			'good': '/assets/good.jpg',
-			'bad': '/assets/bad.jpg'
-		};
-
+	/**
+	 * 秒数によって結果画面で表示する画像を戻り値として返すための関数です
+	 * @param {Number} time 秒数を受け取ります
+	 * @return {Object}     結果メッセージを返します
+	 */
+	function illustChange (time) {
 		if (time <= 2 && time >= 0) {
 			return src['perfect'];
 		} else if (time <= 5 && time >= 0) {
