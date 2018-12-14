@@ -84,8 +84,8 @@ $(function(){
 		totalTime = endTime - startTime;
 		// 秒に直す
 		let resultTime = totalTime / 1000;
-		// 「ハイ！」が68秒目なので、そこからさっき計算した秒数を引く
-		resultTime = 68 - resultTime;
+		// 「ハイ！」が66秒目なので、そこからさっき計算した秒数を引く
+		resultTime = 66 - resultTime;
 
 		// 非同期通信を行う
 		$.ajax({
@@ -103,8 +103,6 @@ $(function(){
 			$('.end-message, #again').show();
 			// ultraSoul関数からの戻り値をもとにテキストを変更するメソッド
 			$('.result-message').text('「 ' + ultraSoul(resultTime) + ' 」');
-
-			alert(resultTime);
 
 			// パーフェクトであれば「やり直し」ボタンを表示しない
 			if (resultTime <= 2 && resultTime >= 0) {
