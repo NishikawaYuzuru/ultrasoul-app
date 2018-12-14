@@ -1,15 +1,10 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # UltrasoulControllerのtopアクションを呼び出す
   root 'ultrasoul#top', as: 'top'
 
-  get "/result" => 'ultrasoul#result', as: 'result'
-
-  get '/ready' => 'ultrasoul#ready', as: 'ready'
-
-  get '/about' => 'ultrasoul#about', as: 'about'
-
+  # UltrasoulControllerのultrasoulアクションを呼び出す
   get '/ultrasoul' => 'ultrasoul#ultrasoul', as: 'ultrasoul'
 
-  # get '/result' => 'ultrasoul#result', as: 'result'
-
+  # Jsonを利用して非同期通信を行う
+  get "/result" => 'ultrasoul#result', as: 'result'
 end

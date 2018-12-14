@@ -10,34 +10,35 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require jquery
 //= require bootstrap-sprockets
 //= require_tree .
 
 $(function(){
 	/**
-	 * スタートボタンを押したタイミングの時刻のための変数です
+	 * スタートボタンを押したタイミングのミリ秒のための変数
 	 * @type {Number}
 	 */
 	let startTime = 0;
 
 	/**
-	 * 「ハイ！」を押したタイミングの時刻のための変数です
+	 * 「ハイ！」を押したタイミングのミリ秒のための変数
 	 * @type {Number}
 	 */
 	let endTime = 0;
 
 	/**
-	 * 「ハイ！」を押したタイミングの時刻のための変数です
+	 * endTimeからstartTimeを引いたミリ秒のための変数
 	 * @type {Number}
 	 */
 	let totalTime = 0;
 
 	/**
-	 * 結果画面でのメッセージを変更するための連想配列です
+	 * 結果画面でのメッセージを変更するための連想配列
 	 * @type {Object}
 	 */
 	let messages = {
@@ -48,7 +49,7 @@ $(function(){
 	};
 
 	/**
-	 * 結果画面での画像を変更するための連想配列です
+	 * 結果画面での画像を変更するための連想配列
 	 * @type {Object}
 	 */
 	let src = {
@@ -58,40 +59,63 @@ $(function(){
 		'bad': '/assets/bad.png'
 	};
 
+	// 「スタート」ボタンを押した時のイベント
 	$(document).on('click', '#start', function(){
+		// スタートボタンを押した時点でのミリ秒
 		startTime = Date.now();
+		// イラストを変更するメソッド
 		$('#illust').attr('src', '/assets/start.png');
+		// テキストを変更するメソッド
 		$('#introduction').text('スタート！！！');
+		// テキストを変更するメソッド
 		$('.start-message').find('p').text('ハイ！！！のタイミングでタッチ！！')
+		// ボタンのテキストとidを変更するメソッド
 		$(this).attr({
 			'value': 'ハイ！',
 			'id': 'end'
 		});
 	});
 
+	// 「ハイ！」ボタンを押した時のイベント
 	$(document).on('click', '#end', function(){
+		// ハイ！ボタンを押した時点でのミリ秒
 		endTime = Date.now();
+		// 残りミリ秒を計算
 		totalTime = endTime - startTime;
+		// 秒に直す
 		let resultTime = totalTime / 1000;
+		// 「ハイ！」が68秒目なので、そこからさっき計算した秒数を引く
 		resultTime = 68 - resultTime;
 
+		// 非同期通信を行う
 		$.ajax({
-			url: '/result',
-			type: 'GET',
-			dataType: 'json'
+			url: '/result', // URLは”/result”を指定
+			type: 'GET', // リクエストのタイプはGET
+			dataType: 'json' // データの型はjson
 		})
+		// 通信に成功した場合の処理
 		.done(function(data) {
+			// illsutChange関数からの戻り値を受け取り画像を変更
 			$('#illust').attr('src', illustChange(resultTime));
+			// 要素を隠すメソッド
 			$('#introduction, .start-message, #ready').hide();
+			// 要素を表示するメソッド
 			$('.end-message, #again').show();
+			// ultraSoul関数からの戻り値をもとにテキストを変更するメソッド
 			$('.result-message').text('「 ' + ultraSoul(resultTime) + ' 」');
 
+			alert(resultTime);
+
+			// パーフェクトであれば「やり直し」ボタンを表示しない
 			if (resultTime <= 2 && resultTime >= 0) {
 				$('.retry').hide();
 			}
 		})
+		// 通信に失敗した場合の処理
 		.fail(function(data) {
+			// アラートで失敗した旨をダイアログで表示
 			alert('エラーです。もう一度「スタート」を押してください。');
+			// ボタンのテキストとidを変更するメソッド
 			$('#end').attr({
 				'value': 'スタート',
 				'id': 'start'
@@ -99,14 +123,16 @@ $(function(){
 		})
 	});
 
+	// 「やり直したい」ボタンを押した時のイベント
 	$(document).on('click', '.retry', function(){
+		// 要素を隠すメソッド
 		$('.end-message').hide();
 	});
 
 	/**
-	 * 秒数によって結果画面で表示するメッセージを戻り値として返すための関数です
-	 * @param {Number} time 秒数を受け取ります
-	 * @return {Object}     結果メッセージを返します
+	 * 秒数によって結果画面で表示するメッセージを戻り値として返すための関数
+	 * @param {Number} time 秒数を受け取る
+	 * @return {Object}     結果メッセージを返す
 	 */
 	function ultraSoul (time) {
 		if (time <= 2 && time >= 0) {
@@ -121,9 +147,9 @@ $(function(){
 	}
 
 	/**
-	 * 秒数によって結果画面で表示する画像を戻り値として返すための関数です
-	 * @param {Number} time 秒数を受け取ります
-	 * @return {Object}     結果メッセージを返します
+	 * 秒数によって結果画面で表示する画像を戻り値として返すための関数
+	 * @param {Number} time 秒数を受け取る
+	 * @return {Object}     結果メッセージを返す
 	 */
 	function illustChange (time) {
 		if (time <= 2 && time >= 0) {
@@ -136,24 +162,4 @@ $(function(){
 			return src['bad'];
 		}
 	}
-
-	// $(document).on('click', '#ajax', function(){
-	// 	$.ajax({
-	// 		url: '/ultrasoul',
-	// 		type: 'GET',
-	// 		dataType: 'json'
-	// 	})
-	// 	.done(function(data) {
-	// 		$('#result').text('aaaaaaaaa');
-	// 	})
-	// 	.fail(function(data) {
-	// 		alert('失敗です');
-	// 	})
-	// });
-
-
-	// $(document).on('click', '#get', function(){
-	// 	$.get('/result');
-	// });
-
 });
